@@ -7,9 +7,5 @@
   },
   "exclude": [
     "node_modules"
-  ],
-  "files": [
-    "main.tsx",
-    "server/app.ts"
   ]
 }

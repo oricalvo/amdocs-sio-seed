@@ -18,6 +18,12 @@ function prod() {
         .then(copyProductionServer);
 }
 
+function test() {
+    console.log("Running test");
+
+    return helpers.shellExec("node node_modules/karma/bin/karma start");
+}
+
 function lint() {
     console.log("Running lint");
 
@@ -63,9 +69,7 @@ function copyProductionServer() {
 function runWebpack() {
     console.log("Packaging for production");
 
-    return helpers.shellExec("node ./node_modules/webpack/bin/webpack.js --config ./build/webpack.config.js", {
-        //cwd: "F:\\Projects\\React\\Seed\\server"
-    });
+    return helpers.shellExec("node ./node_modules/webpack/bin/webpack.js --config ./build/webpack.config.prod.js");
 }
 
 function runBrowser() {
@@ -79,6 +83,8 @@ function runBrowser() {
 module.exports = {
     dev: dev,
     prod: prod,
+    test: test,
     lint: lint,
     runWebpack: runWebpack,
+    compileTS: compileTS,
 };

@@ -12,3 +12,5 @@ declare module "react-tap-event-plugin" {
 declare interface ObjectConstructor {
     assign(obj: any, obj2: any): any;
 }
+
+declare var expect: Chai.ExpectStatic;

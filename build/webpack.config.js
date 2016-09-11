@@ -1,78 +1,85 @@
 var webpack = require("webpack");
 
+function getConfig(isTest) {
+
 //
 //  Set chunk "lib" as a common chunk
 //
-var commonChunks = new webpack.optimize.CommonsChunkPlugin({
-    names: ["lib"],
-});
-
-var config = {
-    //
-    //  Each key creates a new chunk
-    //
-    entry: {
-        lib: [
-            "react",
-            "react-dom",
-            "react-router",
-        ],
-        app: "./main"
-    },
-
-    output:
-    {
-        path: "./dist",
-        filename: "[name].bundle.js"
-    },
-
-    resolve: {
+    var config = {
         //
-        //  default extensions in case of require("./file")
+        //  Each key creates a new chunk
         //
-        extensions: ['', '.ts', '.tsx', '.js']
-    },
+        entry: {
+            lib: [
+                "react",
+                "react-dom",
+                "react-router",
+            ],
+            app: "./main"
+        },
 
-    //
-    //  Create source maps
-    //
-    devtool: 'source-map',
+        output: {
+            path: "./dist",
+            filename: "[name].bundle.js"
+        },
 
-    plugins: [
-        commonChunks,
-    ],
+        resolve: {
+            //
+            //  default extensions in case of require("./file")
+            //
+            extensions: ['', '.ts', '.tsx', '.js']
+        },
 
-    module: {
-        loaders: [
-            {
-                test: /\.tsx?$/,
-                loader: "ts-loader",
-            },
-            {
-                test: /\.scss$/,
-                loaders: [
-                    //
-                    //  inject style tag into HTML
-                    //
-                    'style',
+        //
+        //  Create source maps
+        //
+        devtool: 'source-map',
 
-                    //
-                    //  Handles resources (like images) and add support for CSS modules
-                    //
-                    'css?modules&localIdentName=[name]__[local]___[hash:base64:5]',
-
-                    //
-                    //  Compiles SASS
-                    //
-                    'sass?sourceMap'
-                ]
-            },
-            {
-                test: /\.json$/,
-                loader: "json"
-            },
+        plugins: [
         ],
-    },
-};
 
-module.exports = config;
+        module: {
+            loaders: [
+                {
+                    test: /\.tsx?$/,
+                    loader: "ts-loader",
+                },
+                {
+                    test: /\.scss$/,
+                    loaders: [
+                        //
+                        //  inject style tag into HTML
+                        //
+                        'style',
+
+                        //
+                        //  Handles resources (like images) and add support for CSS modules
+                        //
+                        'css?modules&localIdentName=[name]__[local]___[hash:base64:5]',
+
+                        //
+                        //  Compiles SASS
+                        //
+                        'sass?sourceMap'
+                    ]
+                },
+                {
+                    test: /\.json$/,
+                    loader: "json"
+                },
+            ],
+        },
+    };
+
+    if(!isTest) {
+        var commonChunks = new webpack.optimize.CommonsChunkPlugin({
+            names: ["lib"],
+        });
+
+        config.plugins.push(commonChunks);
+    }
+
+    return config;
+}
+
+module.exports = getConfig;
