@@ -20,7 +20,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        "./tests/main.js",
+        "./tests/index.js",
     ],
 
     // list of files to exclude
