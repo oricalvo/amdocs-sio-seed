@@ -1,0 +1,14 @@
+{
+  "en": {
+    "title": "Preferences",
+    "say_hello": "Say Hello",
+    "toggle_color": "Toggle Color",
+    "toggle_locale": "Toggle Locale"
+  },
+  "he": {
+    "title": "הגדרות",
+    "say_hello": "אמור שלום",
+    "toggle_color": "שנה צבע",
+    "toggle_locale": "שנה שפה"
+  }
+}

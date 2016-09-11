@@ -1,0 +1,16 @@
+node_modules
+.idea
+.sass-cache
+app/**/*.js.map
+app/**/*.js
+server/**/*.js.map
+server/**/*.js
+app/**/*.css
+app/**/*.css.map
+styles/**/*.css
+styles/**/*.css.map
+typings/globals/**
+typings/index.d.ts
+dist/
+main.js
+main.js.map
