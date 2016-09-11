@@ -17,12 +17,12 @@ var config = {
             "react-dom",
             "react-router",
         ],
-        app: "../main"
+        app: "./main"
     },
 
     output:
     {
-        path: "../dist",
+        path: "./dist",
         filename: "[name].bundle.js"
     },
 
