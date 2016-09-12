@@ -1,6 +1,10 @@
 const gulp = require("gulp");
 const helpers = require("./helpers");
 const open = require("open");
+const tslint = require("gulp-tslint");
+const tslintReporter = require("gulp-tslint-jenkins-reporter");
+ 
+
 
 function dev() {
     return Promise.resolve()
@@ -26,8 +30,9 @@ function test() {
 
 function lint() {
     console.log("Running lint");
-
-    return helpers.shellExec("node node_modules/tslint/bin/tslint app/**/*.ts app/**/*.tsx server/**/*.ts");
+	return gulp.src('app/**/*.ts app/**/*.ts app/**/*.tsx server/**/*.ts')
+        .pipe(tslint())
+        .pipe(tslintReporter());
 }
 
 function runDevServer() {
