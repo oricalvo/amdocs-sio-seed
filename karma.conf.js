@@ -10,7 +10,13 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai'],
 
-    reporters: ['mocha'],
+    reporters: ['mocha', 'junit'],
+	
+	//for jenkins to run this build
+	junitReporter : {
+		outputDir: 'test-results',
+		outputFile: 'test-results.xml'
+	},
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
