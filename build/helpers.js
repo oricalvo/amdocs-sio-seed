@@ -1,31 +1,25 @@
 var shell = require("shelljs");
-var Q = require('q');
 
-function shellExec(command, options, desc) {
-    var deferred = Q.defer();
+function shellExec(command, options) {
 
-    options = options || {};
+    return new Promise(function(resolve, reject) {
+        options = options || {};
 
-    if(!options.hasOwnProperty("silent")) {
-        //options.silent = true;
-    }
-
-    if(options.openNewCommandWindow) {
-        if(process.platform == "win32") {
-            command = "START " + command;
+        if(options.openNewCommandWindow) {
+            if(process.platform == "win32") {
+                command = "START " + command;
+            }
         }
-    }
 
-    var res = shell.exec(command, options, function (code) {
-        if (code != 0) {
-            deferred.reject(new Error("Command \"" + command + "\" failed with exit code: " + code));
-        }
-        else {
-            deferred.resolve();
-        }
+        shell.exec(command, options, function (code) {
+            if (code != 0) {
+                reject(new Error("Command \"" + command + "\" failed with exit code: " + code));
+            }
+            else {
+                resolve();
+            }
+        });
     });
-
-    return deferred.promise;
 }
 
 var buildPromise = (function() {
@@ -37,7 +31,7 @@ var buildPromise = (function() {
         this.end = this.end.pipe(pipe);
 
         return this;
-    }
+    };
 
     PromiseBuilder.prototype.done = function() {
         var me = this;
@@ -58,7 +52,7 @@ var buildPromise = (function() {
                 reject(err);
             });
         });
-    }
+    };
 
     return function buildPromise(stream) {
         return new PromiseBuilder(stream);

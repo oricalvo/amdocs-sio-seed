@@ -41,13 +41,13 @@ function runDevServer() {
 function restoreTypings() {
     console.log("Restoring typings");
 
-    return helpers.shellExec("typings install");
+    return helpers.shellExec("node node_modules/typings/dist/bin.js install");
 }
 
 function compileTS() {
     console.log("Compiling typescript");
 
-    return helpers.shellExec("tsc");
+    return helpers.shellExec("node node_modules/typescript/bin/tsc");
 }
 
 function copyIndexHTML() {
@@ -69,7 +69,7 @@ function copyProductionServer() {
 function runWebpack() {
     console.log("Packaging for production");
 
-    return helpers.shellExec("node ./node_modules/webpack/bin/webpack.js --config ./build/webpack.config.prod.js");
+    return helpers.shellExec("node node_modules/webpack/bin/webpack.js --config ./build/webpack.config.prod.js");
 }
 
 function runBrowser() {
