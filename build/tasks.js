@@ -1,26 +1,42 @@
 const gulp = require("gulp");
-const build = require("./build");
+const path = require("path");
+const configurator = require("./configurator");
+const Build = require("./build");
+
+function createBuilder() {
+    const baseDir = path.join(__dirname, "..");
+
+    const config = configurator.create({
+        baseDir: baseDir,
+    });
+
+    return new Build(config);
+}
 
 gulp.task("dev", function() {
-    return build.dev();
+    return createBuilder().dev();
 });
 
 gulp.task("prod", function() {
-    return build.prod();
+    return createBuilder().prod();
 });
 
 gulp.task("test", function() {
-    return build.test();
+    return createBuilder().test();
 });
 
 gulp.task("lint", function() {
-    return build.lint();
+    return createBuilder().lint();
 });
 
-gulp.task("webpack", function() {
-    return build.runWebpack();
+gulp.task("compile-client", function() {
+    return createBuilder().compileClient();
 });
 
-gulp.task("ts", function() {
-    return build.compileTS();
+gulp.task("compile-server", function() {
+    return createBuilder().compileServer();
+});
+
+gulp.task("pack", function() {
+    return createBuilder().compileServer();
 });

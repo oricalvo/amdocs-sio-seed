@@ -5,6 +5,7 @@ import {Unsubscribe} from "redux";
 import {root} from "../../common/LocaleService";
 import {actions} from "../reducers/main";
 import Store = ReactRedux.Store;
+import {Clock} from "../components/Clock";
 const classes = require("./Home.scss");
 let messages = root.create(require("./Home.messages.json"));
 
@@ -54,7 +55,7 @@ export class Home extends React.Component<HomeProps, HomeState> {
 
     private toggleColor() {
         let newColor = (this.titleColor === "red" ? "blue" : "red");
-        this.store.dispatch(actions.changeTitleColor(newColor));
+        this.store.dispatch(actions.changeTitleAndClockColor(newColor));
     }
 
     private toggleLocale() {
@@ -67,8 +68,12 @@ export class Home extends React.Component<HomeProps, HomeState> {
             color: this.titleColor
         };
 
+        const clockColor = this.store.getState().preferences.clockColor;
+
         return (<div className={classes.about}>
             <h1 style={style} className={classes.title}>{messages.translate("title")}</h1>
+
+            <Clock color={clockColor}/>
 
             <RaisedButton
                 className={classes.button}

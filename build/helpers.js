@@ -1,6 +1,7 @@
 var shell = require("shelljs");
 
 function shellExec(command, options) {
+    console.log("Running command: " + command);
 
     return new Promise(function(resolve, reject) {
         options = options || {};

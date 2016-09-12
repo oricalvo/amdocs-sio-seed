@@ -4,7 +4,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {AppContainer} from "./layout/components/AppContainer";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-const injectTapEventPlugin  = require('react-tap-event-plugin');
+const injectTapEventPlugin  = require("react-tap-event-plugin");
 
 //
 //  Inject store variable into each component context

@@ -43,6 +43,16 @@ function getConfig(isTest) {
                 {
                     test: /\.tsx?$/,
                     loader: "ts-loader",
+                    query: {
+                        compilerOptions: {
+                            //
+                            //  the root tsconfig is configured to not emit JS files
+                            //  Webpack by default uses this file
+                            //  Below is an overwrite to allow JS emiting
+                            //
+                            "noEmit": false,
+                        }
+                    }
                 },
                 {
                     test: /\.scss$/,

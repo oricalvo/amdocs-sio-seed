@@ -4,6 +4,7 @@ import {PreferencesState, actions} from "./main";
 describe("changeLocaleReducer", () => {
     let state: PreferencesState = {
         titleColor: "",
+        clockColor: "",
         locale: "en",
     };
 
