@@ -1,9 +1,10 @@
 import * as React from "react";
 import RaisedButton from "material-ui/RaisedButton";
-import {appStore} from "../../store/AppStore";
+import {AppState} from "../../store/AppStore";
 import {Unsubscribe} from "redux";
 import {root} from "../../common/LocaleService";
 import {actions} from "../reducers/main";
+import Store = ReactRedux.Store;
 const classes = require("./Home.scss");
 let messages = root.create(require("./Home.messages.json"));
 
@@ -15,43 +16,55 @@ interface HomeState {
 }
 
 export class Home extends React.Component<HomeProps, HomeState> {
+    static contextTypes = {
+        store: React.PropTypes.object
+    };
+
     unsubscribe: Unsubscribe;
 
     constructor() {
         super();
+    }
 
-        this.state = {
-            color: appStore.getState().preferences.titleColor,
-        };
-
-        this.unsubscribe = appStore.subscribe(() => {
-            this.setState({
-                color: appStore.getState().preferences.titleColor,
-            });
+    componentDidMount() {
+        //
+        //  store (from context) is available only after component has been mounted
+        //
+        this.unsubscribe = this.store.subscribe(() => {
+            this.forceUpdate();
         });
     }
 
     componentWillUnmount() {
         this.unsubscribe();
+        this.unsubscribe = null;
     }
 
-    sayHello() {
+    private get store(): Store<AppState> {
+        return this.context["store"];
+    }
+
+    private get titleColor(): string {
+        return this.store.getState().preferences.titleColor;
+    }
+
+    private sayHello() {
         alert("Hello");
     }
 
-    toggleColor() {
-        let newColor = (this.state.color === "red" ? "blue" : "red");
-        appStore.dispatch(actions.changeTitleColor(newColor));
+    private toggleColor() {
+        let newColor = (this.titleColor === "red" ? "blue" : "red");
+        this.store.dispatch(actions.changeTitleColor(newColor));
     }
 
-    toggleLocale() {
-        let newLocale = (appStore.getState().preferences.locale === "en" ? "he" : "en");
-        appStore.dispatch(actions.changeLocale(newLocale));
+    private toggleLocale() {
+        let newLocale = (this.store.getState().preferences.locale === "en" ? "he" : "en");
+        this.store.dispatch(actions.changeLocale(newLocale));
     }
 
     render() {
         let style = {
-            color: this.state.color
+            color: this.titleColor
         };
 
         return (<div className={classes.about}>
