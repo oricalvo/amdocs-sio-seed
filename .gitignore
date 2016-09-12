@@ -14,3 +14,6 @@ typings/index.d.ts
 dist/
 main.js
 main.js.map
+test-results
+checkstyle.xml
+Chrome_*

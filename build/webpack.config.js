@@ -15,7 +15,7 @@ function getConfig(isTest) {
                 "react-dom",
                 "react-router",
             ],
-            app: "./main"
+            app: "./app/main"
         },
 
         output: {
