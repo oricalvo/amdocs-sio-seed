@@ -23,7 +23,7 @@ function shellExec(command, options) {
     });
 }
 
-var buildPromise = (function() {
+var buildPromiseFromStream = (function() {
     function PromiseBuilder(stream) {
         this.end = this.begin = stream;
     }
@@ -55,12 +55,12 @@ var buildPromise = (function() {
         });
     };
 
-    return function buildPromise(stream) {
+    return function buildPromiseFromStream(stream) {
         return new PromiseBuilder(stream);
     }
 })();
 
 module.exports = {
     shellExec: shellExec,
-    buildPromise: buildPromise,
+    buildPromiseFromStream: buildPromiseFromStream,
 };

@@ -5,8 +5,6 @@ const path = require("path");
 const tslint = require("gulp-tslint");
 const tslintReporter = require("gulp-tslint-jenkins-reporter");
 
-
-
 class Build {
     constructor(config) {
         if(!config) {
@@ -21,16 +19,18 @@ class Build {
             .then(this.restoreTypingsClient.bind(this))
 
             //
-            //  Webpack compiles TS files at runtime to this step is realy required
+            //  Webpack compiles TS files at runtime to this step is not really required
             //  However, we prefer to catch compilation errors before running the dev server
             //
             .then(this.compileClient.bind(this))
 
             .then(this.restoreTypingsServer.bind(this))
             .then(this.compileServer.bind(this))
+            .then(this.lint.bind(this))
             .then(this.runDevServer.bind(this))
             .then(this.runBrowser.bind(this));
     }
+
     prod() {
         return Promise.resolve()
             .then(this.lint.bind(this))
@@ -47,9 +47,11 @@ class Build {
 
     lint() {
         console.log("Running lint");
-	    return gulp.src('app/**/*.ts app/**/*.ts app/**/*.tsx server/app.ts')
+
+	    return helpers.buildPromiseFromStream(gulp.src('app/**/*.ts app/**/*.ts app/**/*.tsx server/app.ts'))
             .pipe(tslint())
-            .pipe(tslintReporter());
+            .pipe(tslintReporter())
+            .done();
     }
 
     runDevServer() {
@@ -89,7 +91,7 @@ class Build {
     copyIndexHTML() {
         console.log("Copying index.html");
 
-        return helpers.buildPromise(gulp.src("./index.html"))
+        return helpers.buildPromiseFromStream(gulp.src("./index.html"))
             .pipe(gulp.dest("dist"))
             .done();
     }
@@ -97,7 +99,7 @@ class Build {
     copyProductionServer() {
         console.log("Copying forProduction.js");
 
-        return helpers.buildPromise(gulp.src("./server/forProduction.js"))
+        return helpers.buildPromiseFromStream(gulp.src("./server/forProduction.js"))
             .pipe(gulp.dest("dist"))
             .done();
     }
