@@ -2,76 +2,88 @@ import * as React from "react";
 import {Router, browserHistory} from "react-router";
 import adminRoutes from "../../admin/routes";
 import homeRoutes from "../../preferences/routes";
+import locationRoutes from '../../example/routes'
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
+import { Provider } from 'react-redux'
+import { appStore } from '../../store/AppStore'
 
 interface AppContainerProps {
 }
 
 interface AppContainerState {
-    isDrawerOpen: boolean;
+  isDrawerOpen: boolean;
 }
 
 export class AppContainer extends React.Component<AppContainerProps, AppContainerState> {
-    //
-    //  Must hold the same reference for routes collection through render invocations, else, react-router
-    //  think we want to change the routes collection and raises a warning
-    //
-    routes: any[];
+  //
+  //  Must hold the same reference for routes collection through render invocations, else, react-router
+  //  think we want to change the routes collection and raises a warning
+  //
+  routes: any[];
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.state = {
-            isDrawerOpen: false,
-        };
+    this.state = {
+      isDrawerOpen: false,
+    };
 
-        this.routes = this.buildRoutes();
-    }
+    this.routes = this.buildRoutes();
+  }
 
-    gotoHome() {
-        this.setState({isDrawerOpen: false});
-        browserHistory.push("/");
-    }
+  gotoHome() {
+    this.setState({ isDrawerOpen: false });
+    browserHistory.push("/");
+  }
 
-    gotoAbout() {
-        this.setState({isDrawerOpen: false});
-        browserHistory.push("/about");
-    }
+  gotoAbout() {
+    this.setState({ isDrawerOpen: false });
+    browserHistory.push("/about");
+  }
 
-    toggleDrawer() {
-        this.setState({isDrawerOpen: !this.state.isDrawerOpen});
-    }
+  gotoLocations() {
+    this.setState({ isDrawerOpen: false });
+    browserHistory.push("/location");
+  }
 
-    private buildRoutes(): any[] {
-        let routes: any[] = [];
+  toggleDrawer() {
+    this.setState({ isDrawerOpen: !this.state.isDrawerOpen });
+  }
 
-        routes = routes
-                    .concat(homeRoutes)
-                    .concat(adminRoutes);
+  private buildRoutes(): any[] {
+    let routes: any[] = [];
 
-        return routes;
-    }
+    routes = routes
+      .concat(homeRoutes)
+      .concat(adminRoutes)
+      .concat(locationRoutes);
 
-    render() {
-        return <div>
-                <AppBar
-                    title="SI&O Seed Project"
-                    iconClassNameRight="muidocs-icon-navigation-expand-more"
-                    onLeftIconButtonTouchTap={() => this.toggleDrawer()} />
+    return routes;
+  }
 
-                {/*docked false makes the drawer to have an overlay which when being clicked the drawer is automatically closed */}
-                <Drawer
-                    docked={false}
-                    open={this.state.isDrawerOpen}
-                    onRequestChange={(open) => this.setState({isDrawerOpen: open})}>
-                    <MenuItem onTouchTap={() => this.gotoHome()}>Preferences</MenuItem>
-                    <MenuItem onTouchTap={() => this.gotoAbout()}>Admin</MenuItem>
-                </Drawer>
+  render() {
+    return <Provider store={appStore}>
+      <div>
+        <AppBar
+          title="SI&O Seed Project"
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+          onLeftIconButtonTouchTap={() => this.toggleDrawer() } />
 
-                <Router history={browserHistory} routes={this.routes}>
-                </Router>
-            </div>;
-    }
+        {/*docked false makes the drawer to have an overlay which when being clicked the drawer is automatically closed */}
+        <Drawer
+          docked={false}
+          open={this.state.isDrawerOpen}
+          onRequestChange={(open) => this.setState({ isDrawerOpen: open }) }>
+          <MenuItem onTouchTap={() => this.gotoHome() }>Preferences</MenuItem>
+          <MenuItem onTouchTap={() => this.gotoAbout() }>Admin</MenuItem>
+          <MenuItem onTouchTap={() => this.gotoLocations() }>Locations</MenuItem>
+        </Drawer>
+
+        <Router history={browserHistory} routes={this.routes}>
+        </Router>
+      </div>
+    </Provider>;
+  }
 }
