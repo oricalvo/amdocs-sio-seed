@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as webpack from "webpack";
 import * as path from "path";
+const debug = require('debug')('app:http')
 const webpackConfig = require("../build/webpack.config")(false);
 const webpackMiddleware = require("webpack-dev-middleware");
 
@@ -10,7 +11,9 @@ registerWebpackMiddleware();
 registerStaticFiles();
 registerReturnAlwaysIndexHtml();
 
-app.listen(8080);
+app.listen(8080, () => {
+    debug('Server is listening on port 8080')
+});
 
 function registerReturnAlwaysIndexHtml() {
     app.use(function(req, res) {

@@ -4,6 +4,7 @@ const open = require("open");
 const path = require("path");
 const tslint = require("gulp-tslint");
 const tslintReporter = require("gulp-tslint-jenkins-reporter");
+var logger = require('gulplog');
 
 class Build {
     constructor(config) {
@@ -40,13 +41,13 @@ class Build {
     }
 
     test() {
-        console.log("Running tests");
+        logger.info("Running tests");
 
         return helpers.shellExec("node node_modules/karma/bin/karma start");
     }
 
     lint() {
-        console.log("Running lint");
+        logger.info("Running lint");
 
 	    return helpers.buildPromiseFromStream(gulp.src('app/**/*.ts app/**/*.ts app/**/*.tsx server/app.ts'))
             .pipe(tslint())
@@ -55,7 +56,7 @@ class Build {
     }
 
     runDevServer() {
-        console.log("Running dev server");
+        logger.info("Running dev server");
 
         helpers.shellExec("node server/app.js");
 
@@ -63,7 +64,7 @@ class Build {
     }
 
     restoreTypingsServer() {
-        console.log("Restoring server typings");
+        logger.info("Restoring server typings");
 
         return helpers.shellExec("node ../node_modules/typings/dist/bin.js install", {
             cwd: path.join(this.config.baseDir, "server")
@@ -71,25 +72,25 @@ class Build {
     }
 
     restoreTypingsClient() {
-        console.log("Restoring client typings");
+        logger.info("Restoring client typings");
 
         return helpers.shellExec("node node_modules/typings/dist/bin.js install");
     }
 
     compileClient() {
-        console.log("Compiling client typescript");
+        logger.info("Compiling client typescript");
 
         return helpers.shellExec("node node_modules/typescript/bin/tsc --project ./app");
     }
 
     compileServer() {
-        console.log("Compiling server typescript");
+        logger.info("Compiling server typescript");
 
         return helpers.shellExec("node node_modules/typescript/bin/tsc --project ./server");
     }
 
     copyIndexHTML() {
-        console.log("Copying index.html");
+        logger.info("Copying index.html");
 
         return helpers.buildPromiseFromStream(gulp.src("./index.html"))
             .pipe(gulp.dest("dist"))
@@ -97,7 +98,7 @@ class Build {
     }
 
     copyProductionServer() {
-        console.log("Copying forProduction.js");
+        logger.info("Copying forProduction.js");
 
         return helpers.buildPromiseFromStream(gulp.src("./server/forProduction.js"))
             .pipe(gulp.dest("dist"))
@@ -105,13 +106,13 @@ class Build {
     }
 
     runWebpack() {
-        console.log("Packaging for production");
+        logger.info("Packaging for production");
 
         return helpers.shellExec("node node_modules/webpack/bin/webpack.js --config ./build/webpack.config.prod.js");
     }
 
     runBrowser() {
-        console.log("Openning browser");
+        logger.info("Openning browser");
 
         open("http://localhost:8080");
 

@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const env = require('gulp-env');
 const path = require("path");
 const configurator = require("./configurator");
 const Build = require("./build");
@@ -13,7 +14,17 @@ function createBuilder() {
     return new Build(config);
 }
 
-gulp.task("dev", function() {
+gulp.task('set-env-development',  function () {
+  env({
+    vars: {
+      DEBUG: "app:*,express:*",
+      DEBUG_COLORS: true,
+      PORT: 8080
+    }
+  })
+});
+
+gulp.task("dev", ['set-env-development'], function() {
     return createBuilder().dev();
 });
 
