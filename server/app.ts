@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as webpack from "webpack";
 import * as path from "path";
-const webpackConfig = require("../build/webpack.config");
+const webpackConfig = require("../build/webpack.config")(false);
 const webpackMiddleware = require("webpack-dev-middleware");
 
 const app = express();
@@ -13,7 +13,7 @@ registerReturnAlwaysIndexHtml();
 app.listen(8080);
 
 function registerReturnAlwaysIndexHtml() {
-    app.use(function(req, res, next) {
+    app.use(function(req, res) {
         res.sendFile(path.join(__dirname, "../index.html"));
     });
 }

@@ -1,25 +1,27 @@
-import {CHANGE_TITLE_COLOR, changeTitleColorReducer, changeTitleColorAction} from "./changeTitleColor";
+import {CHANGE_TITLE_COLOR, changeTitleAndClockColorReducer, changeTitleAndClockColorAction} from "./changeTitleColor";
 import {changeLocaleAction, CHANGE_LOCALE, changeLocaleReducer} from "./changeLocale";
 import {Action} from "redux";
 
 export interface PreferencesState {
     locale: string;
     titleColor: string;
+    clockColor: string;
 }
 
 let initialState: PreferencesState = {
     locale: "en",
     titleColor: "red",
+    clockColor: "green",
 };
 
 const reducers = {
     [CHANGE_LOCALE]: changeLocaleReducer,
-    [CHANGE_TITLE_COLOR]: changeTitleColorReducer,
+    [CHANGE_TITLE_COLOR]: changeTitleAndClockColorReducer,
 };
 
 export const actions = {
     changeLocale: changeLocaleAction,
-    changeTitleColor: changeTitleColorAction,
+    changeTitleAndClockColor: changeTitleAndClockColorAction,
 };
 
 export function preferencesReducer(state: PreferencesState = initialState, action: Action): PreferencesState {
