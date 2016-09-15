@@ -59,7 +59,7 @@ describe('(Actions) LocationWidget', () => {
         // dispatch.getCall(0).should.have.been.calledWith({ type: "FETCH_LOCATIONS_START" });
         // dispatch.getCall(1).should.have.been.calledWith({ payload: [{ formatted_address: "5 Margalit street Haifa Israel" }], type: "FETCH_LOCATIONS_SUCCESS" });
         done()
-      }, 500)
+      }, 0)
     })
 
     it('function callAPI failure', (done) => {
@@ -70,7 +70,7 @@ describe('(Actions) LocationWidget', () => {
         expect(dispatch.firstCall.args[0]).to.deep.equal(actions.fetchLocationStart());
         expect(dispatch.secondCall.args[0].type).to.be.equal(actions.fetchLocationFailure('').type);
         done()
-      }, 500)
+      }, 0)
     })
   })
 })
