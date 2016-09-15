@@ -9,7 +9,7 @@ import { fetchLocationStartAction, fetchLocationSuccessAction, fetchLocationFail
 
 const googleToken: string = 'AIzaSyDIn4755zzPUOcbh_betb3XWN75DpV_hNM'
 
-const callAPI = (filter, dispatch) => {
+export const callAPI = (filter, dispatch) => {
   dispatch(fetchLocationStartAction())
   axios.get('https://maps.googleapis.com/maps/api/geocode/json', { params: { address: filter, key: googleToken } })
     .then((response) => {

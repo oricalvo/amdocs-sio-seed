@@ -9,7 +9,7 @@ export interface LocationState {
   err: string
 }
 
-let initialState: LocationState = {
+export const initialState: LocationState = {
   fetching: false,
   fetched: false,
   filter: null,

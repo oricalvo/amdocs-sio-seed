@@ -32,7 +32,7 @@ gulp.task("prod", function() {
     return createBuilder().prod();
 });
 
-gulp.task("test", function() {
+gulp.task("test", ['set-env-development'], function() {
     return createBuilder().test();
 });
 
