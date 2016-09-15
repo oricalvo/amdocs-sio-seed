@@ -67,7 +67,6 @@ describe('(Actions) LocationWidget', () => {
       callAPI('filter', dispatch)
 
       setTimeout(() => {
-        console.log('second call',dispatch.secondCall.args[0])
         expect(dispatch.firstCall.args[0]).to.deep.equal(actions.fetchLocationStart());
         expect(dispatch.secondCall.args[0].type).to.be.equal(actions.fetchLocationFailure('').type);
         done()
