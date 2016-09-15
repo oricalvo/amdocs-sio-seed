@@ -50,7 +50,7 @@ class Build {
 
 	    return helpers.buildPromiseFromStream(gulp.src('app/**/*.ts app/**/*.ts app/**/*.tsx server/app.ts'))
             .pipe(tslint())
-            .pipe(tslintReporter())
+			.pipe(tslintReporter( {filename: 'build_reports/checkstyle.xml'}))
             .done();
     }
 

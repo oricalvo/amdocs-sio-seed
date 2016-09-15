@@ -1,4 +1,6 @@
 const webpackConfig = require("./build/webpack.config")(true);
+const build_reports = 'build_reports/';
+
 
 module.exports = function(config) {
   config.set({
@@ -10,13 +12,24 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha', 'chai'],
 
-    reporters: ['mocha', 'junit'],
+    reporters: ['mocha', 'junit', 'coverage'],
 	
 	//for jenkins to run this build
 	junitReporter : {
-		outputDir: 'test-results',
+		outputDir: build_reports+'test-results',
 		outputFile: 'test-results.xml'
 	},
+	
+	//generates coverage reports
+	coverageReporter: {
+      // specify a common output directory
+      dir: build_reports+'test-results/coverage',
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' }
+      ]
+    },
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
