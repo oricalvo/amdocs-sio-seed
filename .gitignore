@@ -11,6 +11,8 @@ styles/**/*.css
 styles/**/*.css.map
 typings/globals/**
 typings/index.d.ts
+server/typings/globals/**
+server/typings/index.d.ts
 dist/
 main.js
 main.js.map

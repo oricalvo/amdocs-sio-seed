@@ -10,8 +10,8 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai'],
-
+    frameworks: ['mocha', 'chai', 'sinon'],
+ 
     reporters: ['mocha', 'junit', 'coverage'],
 	
 	//for jenkins to run this build
@@ -34,12 +34,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './tests/index.js': ['webpack']
+      './tests/index.js': ['webpack', 'sourcemap']
     },
 
     // list of files / patterns to load in the browser
     files: [
         "./tests/index.js",
+        './node_modules/phantomjs-polyfill-object-assign/object-assign-polyfill.js',
+        './node_modules/es6-promise/dist/es6-promise.js',
     ],
 
     // list of files to exclude
@@ -77,5 +79,7 @@ module.exports = function(config) {
     concurrency: Infinity,
 
     webpack: webpackConfig,
-  })
-};
+    webpackMiddleware: {
+      noInfo: true
+    },
+  }
