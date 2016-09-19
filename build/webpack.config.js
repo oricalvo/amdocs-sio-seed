@@ -88,6 +88,14 @@ function getConfig(isTest) {
 
     config.plugins.push(commonChunks);
   }
+  else {
+    config.externals = {};
+    config.externals['jsdom'] = 'window';
+    config.externals['cheerio'] = 'window';
+    config.externals['react/lib/ExecutionEnvironment'] = true;
+    config.externals['react/lib/ReactContext'] = true;
+    config.externals['react/addons'] = true;
+  }
 
   return config;
 }

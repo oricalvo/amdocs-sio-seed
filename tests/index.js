@@ -4,5 +4,5 @@
 //  be processed by webpack
 //  In our case, we search for all app/**/*.spec.ts files
 //
-const testsContext = require.context('../app', true, /\.spec\.ts$/)
+const testsContext = require.context('../app', true, /\.spec\.ts[x]?$/)
 testsContext.keys().forEach(testsContext);

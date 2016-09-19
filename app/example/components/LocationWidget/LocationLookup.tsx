@@ -29,7 +29,7 @@ interface IState {
   searchFilter: string
 }
 
-class LocationLookup extends React.Component<IProps, IState> {
+export class LocationLookup extends React.Component<IProps, IState> {
   public static defaultProps: IProps = {
     fetching: false,
     searchAction: (searchFilter) => (alert('LocationLookup search - no action attached...'))
@@ -45,7 +45,7 @@ class LocationLookup extends React.Component<IProps, IState> {
     this.setState({ searchFilter: event.target.value })
   }
   searchActionInvoker() {
-    if (this.state.searchFilter === undefined || this.state.searchFilter.trim().length === 0) {
+    if (this.state.searchFilter === undefined || this.state.searchFilter === null || this.state.searchFilter.trim().length === 0) {
       alert('Please enter search criteria.')
     } else {
       if (!this.props.fetching) {

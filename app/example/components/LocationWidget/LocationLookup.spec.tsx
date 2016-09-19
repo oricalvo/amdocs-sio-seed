@@ -1,6 +1,10 @@
-import { callAPI } from './LocationLookup'
+import * as React from 'react'
+import { LocationLookup, callAPI } from './LocationLookup'
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import { actions } from '../../reducers/main'
 import axios from 'axios'
+import { shallow } from 'enzyme';
 import * as sinon from 'sinon'
 import { expect } from 'chai';
 
@@ -21,7 +25,7 @@ const errResponse = [
   'ERROR'
 ];
 
-describe('(Actions) LocationWidget', () => {
+describe('LocationLookup tests', () => {
   var server
 
   beforeEach(() => {
@@ -71,6 +75,27 @@ describe('(Actions) LocationWidget', () => {
         expect(dispatch.secondCall.args[0].type).to.be.equal(actions.fetchLocationFailure('').type);
         done()
       }, 0)
+    })
+  })
+
+  describe('<LocationLookup />', () => {
+    var searchAction
+    beforeEach(() => {
+      searchAction = sinon.spy()
+    })
+
+    it('renders <LocationLookup /> component', () => {
+      const searchFilter = 'testValue';
+      const wrapper = shallow(<LocationLookup fetching={false} searchAction={searchAction} />)
+      // inner components
+      expect(wrapper.find(RaisedButton)).to.have.length(1);
+      expect(wrapper.find(TextField)).to.have.length(1);
+      // simulate user actions
+      wrapper.find(TextField).simulate('change', {target: {value: searchFilter}});
+      wrapper.find(RaisedButton).simulate('click')
+      // search action should have been called providing the search filter
+      expect(searchAction.calledOnce).to.be.true
+      expect(searchAction.firstCall.args[0]).to.be.equal(searchFilter);
     })
   })
 })
