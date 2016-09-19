@@ -58,6 +58,9 @@
     "webpack-dev-middleware": "~1.6.1",
     "karma-junit-reporter": "1.1.0",
     "gulp-tslint": "^5.0.0",
-    "gulp-tslint-jenkins-reporter": "^1.0.3"
+    "gulp-tslint-jenkins-reporter": "^1.0.3",
+	"karma-coverage": "^1.1.1",
+	"gulp": "^3.9.1",
+	"gulp-tslint-jenkins-reporter": "^1.0.3"
   }
 }
