@@ -1,7 +1,6 @@
 const webpackConfig = require("./build/webpack.config")(true);
 const build_reports = 'build_reports/';
 
-
 module.exports = function(config) {
   config.set({
 
@@ -67,7 +66,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
@@ -82,4 +81,5 @@ module.exports = function(config) {
     webpackMiddleware: {
       noInfo: true
     },
-  }
+  })
+}
