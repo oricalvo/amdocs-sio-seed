@@ -38,6 +38,11 @@ export class AppContainer extends React.Component<AppContainerProps, AppContaine
     browserHistory.push("/");
   }
 
+  gotoHome2() {
+    this.setState({ isDrawerOpen: false });
+    browserHistory.push("/preferences2");
+  }
+
   gotoAbout() {
     this.setState({ isDrawerOpen: false });
     browserHistory.push("/about");
@@ -77,6 +82,7 @@ export class AppContainer extends React.Component<AppContainerProps, AppContaine
           open={this.state.isDrawerOpen}
           onRequestChange={(open) => this.setState({ isDrawerOpen: open }) }>
           <MenuItem onTouchTap={() => this.gotoHome() }>Preferences</MenuItem>
+          <MenuItem onTouchTap={() => this.gotoHome2() }>Preferences 2</MenuItem>
           <MenuItem onTouchTap={() => this.gotoAbout() }>Admin</MenuItem>
           <MenuItem onTouchTap={() => this.gotoLocations() }>Locations</MenuItem>
         </Drawer>
