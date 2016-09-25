@@ -1,5 +1,5 @@
 /*
-    The file implements the same behavior as Home but with react-reduc connect method
+    The file implements the same behavior as Home but with react-redux connect method
  */
 
 import * as React from "react";
@@ -7,53 +7,42 @@ import RaisedButton from "material-ui/RaisedButton";
 import {AppState} from "../../store/AppStore";
 import {root} from "../../common/LocaleService";
 import {actions} from "../reducers/main";
-import Store = ReactRedux.Store;
 import {Clock} from "../components/Clock";
 const classes = require("./Home.scss");
 let messages = root.create(require("./Home.messages.json"));
 import {connect} from "react-redux";
 
-interface Home2Props {
-}
-
-interface Home2State {
-    color: string;
-}
-
-export class Home2 extends React.Component<Home2Props, Home2State> {
-    store: Store<AppState>;
+interface Props {
     titleColor: string;
     clockColor: string;
     locale: string;
+    changeTitleAndClockColor: (color: string) => void;
+    changeLocale: (color: string) => void;
+}
 
-    private sayHello() {
-        //alert("Hello");
-    }
+interface State {
+}
 
+abstract class _HomeWithConnect extends React.Component<Props, any> {
     private toggleColor() {
-        let newColor = (this.titleColor === "red" ? "blue" : "red");
-        this.store.dispatch(actions.changeTitleAndClockColor(newColor));
+        let newColor = (this.props.titleColor === "red" ? "blue" : "red");
+        this.props.changeTitleAndClockColor(newColor);
     }
 
     private toggleLocale() {
-        let newLocale = (this.locale === "en" ? "he" : "en");
-        (this as any).dispatch(actions.changeLocale(newLocale));
+        let newLocale = (this.props.locale === "en" ? "he" : "en");
+        this.props.changeLocale(newLocale);
     }
 
     render() {
         let style = {
-            color: this.titleColor
+            color: this.props.titleColor
         };
 
-        return (<div className={classes.about}>
+        return (<div className={classes.home}>
             <h1 style={style} className={classes.title}>{messages.translate("title")}</h1>
 
-            <Clock color={this.clockColor}/>
-
-            <RaisedButton
-                className={classes.button}
-                onClick={() => this.sayHello()}>{messages.translate("say_hello")}
-            </RaisedButton>
+            <Clock color={this.props.clockColor}/>
 
             <RaisedButton
                 className={classes.button}
@@ -68,10 +57,17 @@ export class Home2 extends React.Component<Home2Props, Home2State> {
     }
 }
 
-export default connect(
-    (state: AppState) => ({
+const mapStateToProps = (state: AppState) => {
+    return {
         titleColor: state.preferences.titleColor,
         clockColor: state.preferences.clockColor,
         locale: state.preferences.locale,
-    }),
-    actions as any) as any as Home2;
+    }
+};
+
+const mapDispatchToProps = {
+    changeTitleAndClockColor: actions.changeTitleAndClockColor,
+    changeLocale: actions.changeLocale,
+};
+
+export const HomeWithConnect = (connect as any)(mapStateToProps, mapDispatchToProps)(_HomeWithConnect);

@@ -1,9 +1,9 @@
 import {Home} from "./pages/Home";
-import {Home2} from "./pages/HomeWithConnect";
+import {HomeWithConnect} from "./pages/HomeWithConnect";
 
 const routes = [
     {path: "/", component: Home},
-    {path: "/preferences2", component: Home2},
+    {path: "/preferences2", component: HomeWithConnect},
 ];
 
 export default routes;

@@ -70,15 +70,10 @@ export class Home extends React.Component<HomeProps, HomeState> {
 
         const clockColor = this.store.getState().preferences.clockColor;
 
-        return (<div className={classes.about}>
+        return (<div className={classes.home}>
             <h1 style={style} className={classes.title}>{messages.translate("title")}</h1>
 
             <Clock color={clockColor}/>
-
-            <RaisedButton
-                className={classes.button}
-                onClick={() => this.sayHello()}>{messages.translate("say_hello")}
-            </RaisedButton>
 
             <RaisedButton
                 className={classes.button}
